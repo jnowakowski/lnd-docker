@@ -74,7 +74,7 @@ $ docker exec -ti lnd lncli openchannels
 $ lncli walletbalance
 ```
 
-# Part III: send to others
+# Part III: send to others off-chain, via Lightning Channels
 ## Connect 
 ```
 $ docker exec -ti lnd lncli connect <identity_pubkey>@<remote_ip_address>
@@ -146,4 +146,10 @@ is **"funding_txid"** and the second one is **"output_index"**:
 ```
 $ docker exec -ti lnd lncli closechannel --funding_txid=<funding_txid> --output_index=<output_index>
 ```
-Now wallet balance should be updated. 
+Wallet balance should be updated. This take some time, as on-chain transaction needs to be mined. 
+
+#Part V: cleanup docker
+```
+$ docker stop lnd
+$ docker rm lnd
+```

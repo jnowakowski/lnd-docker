@@ -102,7 +102,7 @@ $ docker exec -ti lnd lncli addinvoice --amt=10000
 }
 **pay_req** is important - should be passed to other side.
 ```
-## Paying side: create invoice
+## Paying side: send funds to the invoice
 ```
 $ docker exec -ti lnd lncli sendpayment --pay_req=<encoded_invoice>
 ```

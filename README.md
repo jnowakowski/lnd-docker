@@ -38,7 +38,7 @@ $ docker exec -it lnd lncli getinfo
 }
 ```
 # Part II: new address
-## When synchronised, get a new address
+## When synchronised, get a new address and open channel
 Generate a new addres:
 ```
 $ docker exec -it lnd lncli newaddress np2wkh
@@ -69,3 +69,82 @@ After 6 confirmations channel shoud be visible with the command:
 ```
 $ docker exec -ti lnd lncli openchannels
 ```
+## After successfull channel opening your wallet should containd test BTC:
+```
+$ lncli walletbalance
+```
+
+# Part III: transfer test BTC via channel
+
+# Part IV: connect to other people
+## Connect 
+```
+$ docker exec -ti lnd lncli connect <identity_pubkey>@<remote_ip_address>
+```
+## Check connection:
+```
+$ docker exec -ti lnd lncli listpeers
+```
+## Open channel:
+```
+$ docker exec -ti lnd lncli openchannel --node_key=<identity_pubkey> --local_amt=1000000
+```
+Now wait minimum 6 blocks until transaction is mined. Check it with commands:
+```
+$ docker exec -ti lnd lncli pendingchannels
+$ docker exec -ti lnd lncli listchannels
+```
+Once funding transaction is mined, channel will move from pending to open.
+## Receiving side: create invoice
+```
+$ docker exec -ti lnd lncli addinvoice --amt=10000
+{
+        "r_hash": "<random_hash>", 
+        "pay_req": "<encoded_invoice>", 
+}
+**pay_req** is important - should be passed to other side.
+```
+## Paying side: create invoice
+```
+$ docker exec -ti lnd lncli sendpayment --pay_req=<encoded_invoice>
+```
+## Wallet and channel balance
+Can be checked as below:
+```
+$ docker exec -ti lnd lncli walletbalance
+$ docker exec -ti lnd lncli channelbalance
+```
+## Closing channel
+This will commit fund to the blockchain. First of all get the channel details. Important parameter is **channel_point**:
+```
+$ docker exec -ti lnd lncli listchannels
+{
+    "channels": [
+        {
+            "active": true,
+            "remote_pubkey": "0343bc80b914aebf8e50eb0b8e445fc79b9e6e8e5e018fa8c5f85c7d429c117b38",
+       ---->"channel_point": "3511ae8a52c97d957eaf65f828504e68d0991f0276adff94c6ba91c7f6cd4275:0",
+            "chan_id": "1337006139441152",
+            "capacity": "1005000",
+            "local_balance": "990000",
+            "remote_balance": "10000",
+            "commit_fee": "8688",
+            "commit_weight": "724",
+            "fee_per_kw": "12000",
+            "unsettled_balance": "0",
+            "total_satoshis_sent": "10000",
+            "total_satoshis_received": "0",
+            "num_updates": "2",
+            "pending_htlcs": [
+            ],
+            "csv_delay": 4
+        }
+    ]
+}
+```
+Channel point consists of two numbers separated by a colon. The first one 
+is **"funding_txid"** and the second one is **"output_index"**:
+```
+$ docker exec -ti lnd lncli closechannel --funding_txid=<funding_txid> --output_index=<output_index>
+```
+Now wallet balance should be updated. 

@@ -67,7 +67,7 @@ $ docker exec -ti lnd lncli pendingchannels
 ```
 After 6 confirmations channel shoud be visible with the command:
 ```
-$ docker exec -ti lnd lncli openchannels
+$ docker exec -ti lnd lncli listchannels
 ```
 ## After successfull channel opening your wallet should containd test BTC:
 ```

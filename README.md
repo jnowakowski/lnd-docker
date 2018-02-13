@@ -71,7 +71,7 @@ $ docker exec -ti lnd lncli listchannels
 ```
 ## After successfull channel opening your wallet should containd test BTC:
 ```
-$ lncli walletbalance
+$ docker exec -ti lnd lncli walletbalance
 ```
 
 # Part III: send to others off-chain, via Lightning Channels

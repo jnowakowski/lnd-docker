@@ -37,7 +37,7 @@ $ docker exec -it lnd lncli getinfo
     ]
 }
 ```
-# Part II: new address
+# Part II: open channel
 ## When synchronised, get a new address and open channel
 Generate a new addres:
 ```
@@ -74,9 +74,7 @@ $ docker exec -ti lnd lncli openchannels
 $ lncli walletbalance
 ```
 
-# Part III: transfer test BTC via channel
-
-# Part IV: connect to other people
+# Part III: send to others
 ## Connect 
 ```
 $ docker exec -ti lnd lncli connect <identity_pubkey>@<remote_ip_address>
@@ -114,6 +112,7 @@ Can be checked as below:
 $ docker exec -ti lnd lncli walletbalance
 $ docker exec -ti lnd lncli channelbalance
 ```
+# Part IV: Close channel and commit to blockchain
 ## Closing channel
 This will commit fund to the blockchain. First of all get the channel details. Important parameter is **channel_point**:
 ```

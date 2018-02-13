@@ -153,3 +153,10 @@ Wallet balance should be updated. This take some time, as on-chain transaction n
 $ docker stop lnd
 $ docker rm lnd
 ```
+
+# If faucet do not cooperate, reset the container:
+```
+$ docker exec -it lnd rm /root/.lnd/data/chain/bitcoin/testnet/wallet.db
+$ docker restart lnd
+```
+Once lnd is synced, start over Part II.

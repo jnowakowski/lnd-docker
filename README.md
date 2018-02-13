@@ -71,7 +71,8 @@ $ docker exec -ti lnd lncli listchannels
 ```
 ## After successfull channel opening your wallet should containd test BTC:
 ```
-$ docker exec -ti lnd lncli walletbalance
+$ docker exec -ti lnd lncli walletbalance // on-chain balance (remains zero until closing the channel)
+$ docker exec -ti lnd lncli channelbalance // channel balance (should be 50'000 satoshis now)
 ```
 
 # Part III: send to others off-chain, via Lightning Channels

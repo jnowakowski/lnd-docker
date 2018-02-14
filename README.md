@@ -109,12 +109,13 @@ $ docker exec -ti lnd lncli sendpayment --pay_req=<encoded_invoice>
 ```
 ## Example transaction
 ```
+### receiving side
 orion@lightnode ~ $ docker exec -ti lnd lncli addinvoice 1024
 {
         "r_hash": "78c13f43af70c6fa81cc5baaa210b435af2dc72c7430c06bbb34360330a1bf49",
         "pay_req": "lntb10240n1pdg87e5pp50rqn7sa0wrr04qwvtw42yy95xkhjm3evwscvq6amxsmqxv9phaysdqqcqzyswrj6ys3x3r9pgff7ncgamgh5kfe208t2tcrt4rlffvpzshzj3gthet3lvx52leqdprszhe2a0rklezzqh5v7hkfgwuykq5jt976mxysptlc76u"
 }
-
+### paying side
 ubuntu@ip-172-31-34-239:~$ lncli --no-macaroons sendpayment --pay_req lntb10240n1pdg87e5pp50rqn7sa0wrr04qwvtw42yy95xkhjm3evwscvq6amxsmqxv9phaysdqqcqzyswrj6ys3x3r9pgff7ncgamgh5kfe208t2tcrt4rlffvpzshzj3gthet3lvx52leqdprszhe2a0rklezzqh5v7hkfgwuykq5jt976mxysptlc76u
 {
         "payment_error": "",

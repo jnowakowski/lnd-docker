@@ -107,6 +107,40 @@ $ docker exec -ti lnd lncli addinvoice --amt=10000
 ```
 $ docker exec -ti lnd lncli sendpayment --pay_req=<encoded_invoice>
 ```
+## Example transaction
+```
+orion@lightnode ~ $ docker exec -ti lnd lncli addinvoice 1024
+{
+        "r_hash": "78c13f43af70c6fa81cc5baaa210b435af2dc72c7430c06bbb34360330a1bf49",
+        "pay_req": "lntb10240n1pdg87e5pp50rqn7sa0wrr04qwvtw42yy95xkhjm3evwscvq6amxsmqxv9phaysdqqcqzyswrj6ys3x3r9pgff7ncgamgh5kfe208t2tcrt4rlffvpzshzj3gthet3lvx52leqdprszhe2a0rklezzqh5v7hkfgwuykq5jt976mxysptlc76u"
+}
+
+ubuntu@ip-172-31-34-239:~$ lncli --no-macaroons sendpayment --pay_req lntb10240n1pdg87e5pp50rqn7sa0wrr04qwvtw42yy95xkhjm3evwscvq6amxsmqxv9phaysdqqcqzyswrj6ys3x3r9pgff7ncgamgh5kfe208t2tcrt4rlffvpzshzj3gthet3lvx52leqdprszhe2a0rklezzqh5v7hkfgwuykq5jt976mxysptlc76u
+{
+        "payment_error": "",
+        "payment_preimage": "1b86b9236a1fc1136ab0d629feb254e655965e5bf400910831a450041b53901c",
+        "payment_route": {
+                "total_time_lock": 1282894,
+                "total_fees": 1,
+                "total_amt": 1025,
+                "hops": [
+                        {
+                                "chan_id": 1408016998345146368,
+                                "chan_capacity": 100000,
+                                "amt_to_forward": 1024,
+                                "fee": 1,
+                                "expiry": 1282750
+                        },
+                        {
+                                "chan_id": 1410164344553472000,
+                                "chan_capacity": 200000,
+                                "amt_to_forward": 1024,
+                                "expiry": 1282750
+                        }
+                ]
+        }
+}
+```
 ## Wallet and channel balance
 Can be checked as below:
 ```
